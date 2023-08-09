@@ -1,4 +1,6 @@
 from django.shortcuts import render,get_object_or_404
+from rest_framework import viewsets
+from .serializers import PostsSerializer
 from .models import Post
 
 # Create your views here.
@@ -19,3 +21,7 @@ def post_detail(request, slug):
         "post": identified_post,
         "post_tags": identified_post.tags.all()
     })
+    
+class PostsViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all().order_by("-date")
+    serializer_class = PostsSerializer    
