@@ -4,7 +4,7 @@ from . import views
 from .views import *
 
 router = routers.DefaultRouter()
-router.register(r'postapi', PostsViewSet)
+router.register(r'postapi', PostsViewSet) 
 
 urlpatterns = [
     path("", views.starting_page, name= "starting-page"),

@@ -1,9 +1,10 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+from .models import Post,Tag,Author
  
-from .models import Post
- 
-
-class PostsSerializer(serializers.ModelSerializer):
+#To use a single Serializer
+'''class PostsSerializer(serializers.ModelSerializer):
     
     author_name = serializers.SerializerMethodField()
     
@@ -14,4 +15,56 @@ class PostsSerializer(serializers.ModelSerializer):
     def get_author_name(self, obj):
         if obj.author:
             return obj.author.full_name()
-        return None        
+        return None      '''  
+
+#Using Nested Serializer        
+# class TagSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Tag
+#         fields = '__all__'
+
+# class AuthorSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Author
+#         fields = '__all__'     
+        
+# class PostSerializer(serializers.ModelSerializer):
+#     author = AuthorSerializer()  # Nesting AuthorSerializer
+#     tags = TagSerializer(many=True)  # Nesting TagSerializer for many-to-many relationship
+
+#     class Meta:
+#         model = Post
+#         fields = '__all__' 
+                  
+           
+           
+'''class PostsSerializer(serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelatedField(queryset=Author.objects.all())
+    tags = serializers.PrimaryKeyRelatedField(queryset=Tag.objects.all(), many=True)
+
+    class Meta:
+        model = Post
+        fields = '__all__'
+        
+    def create(self, validated_data):
+        tags_data = validated_data.pop('tags')
+        
+        post = Post.objects.create(**validated_data)
+            
+        for tag_id in tags_data:
+            try:
+                # tag = Tag.objects.get(pk=tag_id)
+                post.tags.add(tag_id)
+            except Tag.DoesNotExist:
+                raise serializers.ValidationError("One or more tags not found.")
+        
+        return post '''
+
+class PostsSerializer(serializers.Serializer):
+    title = serializers.CharField(max_length=150)
+    excerpt = serializers.CharField(max_length=200)
+    content = serializers.CharField(max_length=1500)
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        return data
