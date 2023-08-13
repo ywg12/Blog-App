@@ -9,8 +9,8 @@ class Tag(models.Model):
         return self.caption
 
 class Author(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
     email_address = models.EmailField()
     
     def full_name(self):

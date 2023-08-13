@@ -2,11 +2,6 @@ from django.shortcuts import render,get_object_or_404
 from rest_framework import viewsets
 from .serializers import PostsSerializer
 from .models import Post
-from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from rest_framework.response import Response
-from rest_framework import status
-
 # Create your views here.
 
 def starting_page(request):
@@ -27,17 +22,5 @@ def post_detail(request, slug):
     })
     
 class PostsViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all().order_by("-date")
-    serializer_class = PostsSerializer  
-    
-class SignupAPIView(APIView):
-    """This api will handle signup"""
-    def post(self,request):
-        serializer = SignupSerializer(data = request.data)
-        if serializer.is_valid():
-            """If the validation success, it will created a new user."""
-            serializer.save()
-            res = { 'status' : status.HTTP_201_CREATED }
-            return Response(res, status = status.HTTP_201_CREATED)
-        res = { 'status' : status.HTTP_400_BAD_REQUEST, 'data' : serializer.errors }
-        return Response(res, status = status.HTTP_400_BAD_REQUEST)
+    queryset = Post.objects.all()
+    serializer_class = PostsSerializer

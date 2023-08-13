@@ -1,2 +1,4 @@
 # Doesn't upload the venv folder that is created for the virtual environment for this django application.
 venv/
+#ignores the environment file
+.env
