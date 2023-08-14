@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from rest_framework import viewsets
+from rest_framework.response import Response
 from .serializers import PostsSerializer
 from .models import Post
 # Create your views here.
@@ -24,3 +25,9 @@ def post_detail(request, slug):
 class PostsViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostsSerializer
+    
+    def search_by_title(self, request):
+        title_query = request.query_params.get('title', '')
+        posts = Post.objects.filter(title__icontains=title_query)
+        serializer = self.get_serializer(posts, many=True)
+        return Response(serializer.data)
