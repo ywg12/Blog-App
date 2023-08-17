@@ -98,6 +98,15 @@ TEMPLATES = [
 
 SWAGGER_SETTINGS = {
     'VALIDATOR_URL': 'http://localhost:8000',
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'in': 'header',
+            'name': 'Authorization',
+            'format': 'Bearer'
+        }
+    },
+          
 }
 
 LOGIN_REDIRECT_URL = '/home'

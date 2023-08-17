@@ -8,7 +8,8 @@ from drf_yasg.utils import swagger_auto_schema
 from .serializers import PostsSerializer
 from .models import Post
 from rest_framework.permissions import *
-from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from rest_framework import permissions
+
 
 # Create your views here.
 @permission_required('blog.view_post')
@@ -34,9 +35,17 @@ def post_detail(request, slug):
     })
 
 
+class HasSpecificPermission(permissions.BasePermission):
+    def has_permission(self, request, view):
+        # Customize this logic based on your requirements
+        # For example, check if the user has a specific permission
+        return request.user.has_perm('blog.view_post')
+
+
 class PostsViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostsSerializer
+    permission_classes = [HasSpecificPermission]
 
     @swagger_auto_schema(
         manual_parameters=[
