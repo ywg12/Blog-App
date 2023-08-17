@@ -56,8 +56,6 @@ class StartingPageView(PermissionRequiredMixin, View):
             "posts": latest_posts
         })
 
-    def get_permission_required(self):
-        return self.permission_required
 
 class PostsView(PermissionRequiredMixin, View):
     permission_required = ['blog.view_post']
