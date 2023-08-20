@@ -1,5 +1,7 @@
+import os
 from django.db import models
 from django.core.validators import MinLengthValidator
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -32,3 +34,24 @@ class Post(models.Model):
     class Meta:
         db_table = 'posts'
     
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='user_images/', null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username
+    
+    def save(self, *args, **kwargs):
+        if self.image:
+            # Get the original image name
+            original_image_name = os.path.basename(self.image.name)
+            
+            # Construct the new image name using username
+            new_image_name = f'{self.user.username}_{original_image_name}'
+            
+            # Update the image name
+            self.image.name = new_image_name
+        
+        super(UserProfile, self).save(*args, **kwargs)
+     

@@ -10,7 +10,7 @@ class Command(BaseCommand):
             # {'id': 2, 'first_name': 'John', 'last_name': 'Smith'},
             {'id': 3, 'first_name': 'Aman', 'last_name': 'Khan'},
             {'id': 4, 'first_name': 'Anshuman', 'last_name': 'Sharma'},
-            {'id': 5, 'first_name': 'Ritesh', 'last_name': 'Sharma'}
+            {'id': 7, 'first_name': 'Ritesh', 'last_name': 'Sharma'}
             
         ]
 
