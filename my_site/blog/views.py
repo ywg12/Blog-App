@@ -77,14 +77,14 @@ class PostDetailView(PermissionRequiredMixin, View):
         })
 
 class CustomPagination(PageNumberPagination):
-    page_size = 3  # Number of items per page
+    page_size = 3
     page_size_query_param = 'page_size'
     max_page_size = 5
 
 class PostsViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostsSerializer
-    pagination_class = CustomPagination  # Use the custom pagination class    
+    pagination_class = CustomPagination
 
     def get_permissions(self):
         permission_classes = [HasSpecificPermission('blog.view_post')]
