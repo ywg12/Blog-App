@@ -11,6 +11,7 @@ from .serializers import PostsSerializer
 from .models import Post
 from rest_framework.permissions import *
 from rest_framework import permissions,viewsets
+from rest_framework.pagination import PageNumberPagination
 
 
 
@@ -75,10 +76,15 @@ class PostDetailView(PermissionRequiredMixin, View):
             "post_tags": identified_post.tags.all()
         })
 
+class CustomPagination(PageNumberPagination):
+    page_size = 3  # Number of items per page
+    page_size_query_param = 'page_size'
+    max_page_size = 5
 
 class PostsViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostsSerializer
+    pagination_class = CustomPagination  # Use the custom pagination class    
 
     def get_permissions(self):
         permission_classes = [HasSpecificPermission('blog.view_post')]

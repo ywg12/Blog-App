@@ -1,4 +1,3 @@
-import os
 from django.db import models
 from django.core.validators import MinLengthValidator
 from django.contrib.auth.models import User
@@ -66,11 +65,12 @@ class UserImage(models.Model):
     image = models.ImageField(upload_to='user_images/')
 
     def __str__(self):
-        return os.path.basename(self.image.name)
+        return self.image.name
 
     def save(self, *args, **kwargs):
         if self.image:
-            original_image_name = os.path.basename(self.image.name)
+            original_image_name = self.image.name
+            
             new_image_name = f'{self.user_profile.user.username}_{original_image_name}'
             
             # Check if an image with the same filename exists
