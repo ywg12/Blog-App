@@ -1,17 +1,18 @@
-from django.shortcuts import render,get_object_or_404, redirect
+from .serializers import PostsSerializer, UserProfileSerializer
+from .models import Post, UserProfile
 from django.views import View
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import action
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.shortcuts import render,get_object_or_404, redirect
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from .serializers import PostsSerializer
-from .models import Post
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework.permissions import *
 from rest_framework import permissions,viewsets
 from rest_framework.pagination import PageNumberPagination
+
 
 
 
@@ -109,3 +110,8 @@ class PostsViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
+class UserProfileViewSet(viewsets.ModelViewSet):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerializer
+    pagination_class = CustomPagination
+    

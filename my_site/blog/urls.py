@@ -8,6 +8,7 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register(r'postapi', PostsViewSet) 
+router.register(r'user-profiles', UserProfileViewSet)
 urlpatterns = [
     #function-based calls
     # path("home", views.starting_page, name= "starting-page"),
@@ -22,7 +23,7 @@ urlpatterns = [
     path('search/', PostsViewSet.as_view({'get': 'search_by_title'}), name='search-posts-by-title'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify')
+    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]
 
 

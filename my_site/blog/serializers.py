@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
-from .models import Post,Tag,Author
+from .models import Post,Tag,Author,UserProfile
 import re
 
 str_reg = re.compile("^[a-zA-Z-\\s]+$")
@@ -71,7 +71,12 @@ class PostsSerializer(serializers.ModelSerializer):
         raise serializers.ValidationError("Title can only have letters and spaces")
 
 
-
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ('user', 'image')
+        
+        
 
 # class PostsSerializer(serializers.Serializer):
 #     title = serializers.CharField(max_length=150)
