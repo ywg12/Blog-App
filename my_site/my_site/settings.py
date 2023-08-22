@@ -63,7 +63,7 @@ MIDDLEWARE = [
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
 #     ),
 # }
 
@@ -96,6 +96,7 @@ TEMPLATES = [
 
 SWAGGER_SETTINGS = {
     'VALIDATOR_URL': 'http://localhost:8000',
+    'PERSIST_AUTH': True,
     'SECURITY_DEFINITIONS': {
         'Bearer': {
             'type': 'apiKey',
