@@ -12,6 +12,7 @@ from rest_framework.decorators import action
 from rest_framework.permissions import *
 from rest_framework import permissions,viewsets
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.parsers import FileUploadParser
 
 
 
@@ -113,5 +114,5 @@ class PostsViewSet(viewsets.ModelViewSet):
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    pagination_class = CustomPagination
+    pagination_class = CustomPagination      
     
